@@ -8,7 +8,7 @@ const CartPage = () => {
   const [orderId, setOrderId] = useState(''); // define orderId state and setOrderId function to update orderId state
 
   const handleApprove = (data) => {
-    setOrderId(data.orderID); // update orderId state with data.orderID
+    // setOrderId(data.orderID); // update orderId state with data.orderID
     window.location.href = `/thank-you?orderId=${data.orderID}`; // redirect to thank-you page with orderId query parameter
   };
 
