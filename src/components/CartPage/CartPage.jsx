@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
-// import './CartPage.css'; // Import your custom CSS
+import './CartPage.css'; 
+import Bat from '../../assets/images/bat.svg';
+import Logo from '../../assets/images/PPLogo.svg';
 
 const CartPage = () => {
   const [orderId, setOrderId] = useState('');
@@ -17,9 +19,11 @@ const CartPage = () => {
 
   return (
     <div className="cart-container">
-      <h2 className="text-center">ai-generated NFT Bored Ape</h2>
+      <h1 className="header">Welcome to JoJo's Sporting goods</h1>
+      <h2> Baseball Bat </h2>
+      <img src={Bat} alt="" />
       <div className="text-center">
-        <div className="price">$100.00 USD</div>
+        <div className="price">Price: $100.00 USD</div>
       </div>
       <div className="buyer-info">
         <input type="text" placeholder="First Name" defaultValue="John" />
@@ -33,6 +37,7 @@ const CartPage = () => {
       </div>
       <PayPalScriptProvider options={initialOptions}>
         <PayPalButtons
+          className='paypal-button'
           createOrder={(data, actions) => {
             return actions.order.create({
               purchase_units: [
@@ -48,6 +53,9 @@ const CartPage = () => {
           onApprove={handleApprove}
         />
       </PayPalScriptProvider>
+      <div className="footer">
+        <img src={Logo} alt="Logo" />
+      </div>
     </div>
   );
 };
