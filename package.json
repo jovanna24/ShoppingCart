@@ -2,16 +2,13 @@
     "name": "shopping-cart",
     "version": "1.0.0",
     "scripts": {
-      "start:client": "cd client && npm start",
-      "start:server": "cd server && npm start",
-      "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
-      "build:client": "cd client && npm run build",
-      "build:server": "cd server && npm run build", 
-      "build": "npm run build:client && npm run build:server",
-      "dev:client": "cd client && npm run dev",
-      "dev:server": "cd server && npm run dev",
-      "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-      "test": "echo \"No tests specified\" && exit 0"
+      "start": "node server/server.js",
+      "dev-client": "cd client && npm run dev",
+      "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
+      "install": "cd server && npm i && cd ../client && npm i",
+      "build": "cd client && npm run build",
+      "render-build": "npm install && npm run build",
+      "prod": "NODE_ENV=production nodemon server.js"
     },
     "dependencies": {
       "concurrently": "^8.0.0"
