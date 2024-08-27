@@ -1,41 +1,20 @@
 {
-  "name": "shopping-cart",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@paypal/react-paypal-js": "^8.5.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "dotenv": "^16.4.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.1",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "name": "shopping-cart",
+    "version": "1.0.0",
+    "scripts": {
+      "start:client": "cd client && npm start",
+      "start:server": "cd server && npm start",
+      "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
+      "build:client": "cd client && npm run build",
+      "build:server": "cd server && npm run build", 
+      "build": "npm run build:client && npm run build:server",
+      "dev:client": "cd client && npm run dev",
+      "dev:server": "cd server && npm run dev",
+      "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+      "test": "echo \"No tests specified\" && exit 0"
+    },
+    "dependencies": {
+      "concurrently": "^8.0.0"
+    }
   }
-}
+  
