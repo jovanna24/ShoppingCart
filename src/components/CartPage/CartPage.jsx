@@ -13,7 +13,7 @@ const CartPage = () => {
   };
 
   const initialOptions = {
-    clientId: 'AQfANXPQDniBE-RuFxPFsBlIyz0nxN5YS0U0FsCtXb2i8PPBaohbSTWLk6qaxArDCj7Msd0a63D6UDzM',
+    clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
     currency: 'USD',
   };
 
