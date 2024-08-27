@@ -1,17 +1,24 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import 'dotenv/config';
+import cors from 'cors';
+import path from 'path';
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Enable CORS
+app.use(cors());
+
+// Get port and environment variables
 const port = process.env.PORT || 3000;
 const environment = process.env.ENVIRONMENT || 'sandbox';
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 const endpoint_url = environment === 'sandbox' ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com';
 
+// Define routes
 app.post('/create_order', async (req, res) => {
     try {
         const access_token = await get_access_token();
@@ -80,18 +87,12 @@ async function get_access_token() {
     return json.access_token;
 }
 
-app.use(express.static('public'));
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/thank-you', (req, res) => {
-    const transaction_id = req.query.orderId;
-    res.send(`
-        <html>
-        <body>
-            <h1>Thank You!</h1>
-            <p>Your transaction ID is: ${transaction_id}</p>
-        </body>
-        </html>
-    `);
+// Handle React routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 app.listen(port, () => {
