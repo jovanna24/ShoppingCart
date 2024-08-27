@@ -1,5 +1,5 @@
-import React, { useState } from 'react'; // import React and useState from React
-import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'; // import PayPalButtons and PayPalScriptProvider from '@paypal/react-paypal-js'
+import React, { useState } from 'react'; // import React and useState
+import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'; // import PayPalButtons and PayPalScriptProvider
 import './CartPage.css'; // import CartPage.css
 import Bat from '../../assets/images/bat.svg'; // import bat image
 import Logo from '../../assets/images/PPLogo.svg'; // import PayPal logo
@@ -8,7 +8,7 @@ const CartPage = () => {
   const [orderId, setOrderId] = useState(''); // define orderId state and setOrderId function to update orderId state
 
   const handleApprove = (data) => {
-    // setOrderId(data.orderID); // update orderId state with data.orderID
+    setOrderId(data.orderID); // update orderId state with data.orderID
     window.location.href = `/thank-you?orderId=${data.orderID}`; // redirect to thank-you page with orderId query parameter
   };
 
@@ -56,9 +56,9 @@ const CartPage = () => {
       <div className="footer"> 
         <img src={Logo} alt="Logo" /> 
       </div>
+      {orderId && <p>Your Order ID: {orderId}</p>} {/* Example of using orderId */}
     </div>
   );
 };
 
 export default CartPage; 
-
