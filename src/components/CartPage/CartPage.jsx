@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import "./CartPage.css";
-import Bat from "../../assets/images/bat.svg";
 import Logo from "../../assets/images/PPLogo.svg";
+import { CartContext } from "../../context/CartContext.jsx";
+import { useContext } from "react";
 
 const CartPage = () => {
-
+  const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
   const navigate = useNavigate();
   
   const handleApprove = (data, actions) => {
@@ -27,11 +28,27 @@ const CartPage = () => {
 
   return (
     <div className="cart-container">
-      <h1 className="header">Welcome to JoJo's Sporting goods</h1>
-      <h2> Baseball Bat </h2>
-      <img src={Bat} alt="" />
       <div className="text-center">
-        <div className="price">Price: $100.00 USD</div>
+        <div className="cart-content">
+          {cart.length === 0 ? (
+            <p>Your cart is empty.</p> 
+          ) : (
+            cart.map((item, index) => (
+              <div className="cart-item" key={index}>
+                <img src={item.img} alt={item.name} />
+                <p>{item.name}</p>
+                <p>${item.price.toFixed(2)}</p>
+                <p>Quantity: {item.quantity}</p>
+                <button onClick={() => updateQuantity(item, item.quantity + 1)}>Increase Quantity</button>
+                <button onClick={() => updateQuantity(item, item.quantity - 1)} disabled={item.quantity <= 1}>Decrease Quantity</button>
+                <button onClick={() => removeFromCart(item)}>Remove from Cart</button>
+              </div>
+            ))
+          )}
+          <div className="cart-total">
+            <p>Total: ${cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}</p>
+          </div>
+        </div>
       </div>
       <div className="buyer-info">
         <input type="text" placeholder="First Name" defaultValue="John" />
@@ -58,7 +75,7 @@ const CartPage = () => {
                 {
                   amount: {
                     currency_code: "USD",
-                    value: "100.00",
+                    value: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2),
                   },
                 },
               ],
