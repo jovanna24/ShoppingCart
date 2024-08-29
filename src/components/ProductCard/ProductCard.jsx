@@ -26,7 +26,8 @@ ProductCard.propTypes = {
         img: PropTypes.object  
     }).isRequired, 
     onAddToCart: PropTypes.func.isRequired,
-    onRemoveFromCart: PropTypes.func.isRequired
+    onRemoveFromCart: PropTypes.func.isRequired,
+    quantity: PropTypes.number.isRequired
 };
 
 export default ProductCard;
