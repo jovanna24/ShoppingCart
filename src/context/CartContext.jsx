@@ -12,7 +12,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => { 
     localStorage.setItem('cart', JSON.stringify(cart))
-  })
+  }, [cart]); // save cart to local storage
 
   const addToCart = (product) => {
     setCart((prevCart) => {

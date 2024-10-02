@@ -1,18 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+// import necessary components and hooks
+import { useNavigate } from "react-router-dom";//navigate between routes
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"; //paypal integration components
 import "./CartPage.css";
 import Logo from "../../assets/images/PPLogo.svg";
-import { CartContext } from "../../context/CartContext.jsx";
-import { useContext } from "react";
+import { CartContext } from "../../context/CartContext.jsx"; //import cart context to access cart-state
+import { useContext } from "react"; //hook to access context
 
 const CartPage = () => {
+  //destructure cart from context to access cart-state
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
+  //use navigate hook to navigate between routes
   const navigate = useNavigate();
   
+  //paypal integration, handles payment approval
   const handleApprove = (data, actions) => {
-    return actions.order.capture().then((details) =>{
-      navigate('/thank-you', {
-        state: {
+    return actions.order.capture().then((details) =>{ //capture details of payment
+      navigate('/thank-you', { //navigate to thank-you page
+        state: { //pass data to thank-you page
           orderId: data.orderID, 
           amount: details.purchase_units[0].amount.value, 
           currency: details.purchase_units[0].amount.currency_code
@@ -21,6 +25,7 @@ const CartPage = () => {
     }); 
   }; 
 
+  //paypal script provider options
   const initialOptions = {
     clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
     currency: "USD",
@@ -33,7 +38,7 @@ const CartPage = () => {
           {cart.length === 0 ? (
             <p>Your cart is empty.</p> 
           ) : (
-            cart.map((item, index) => (
+            cart.map((item, index) => ( 
               <div className="cart-item" key={index}>
                 <img src={item.img} alt={item.name} />
                 <p>{item.name}</p>
@@ -70,12 +75,13 @@ const CartPage = () => {
         <PayPalButtons
           className="paypal-button"
           createOrder={(data, actions) => {
+            const totalAmount = cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
             return actions.order.create({
               purchase_units: [
                 {
                   amount: {
                     currency_code: "USD",
-                    value: cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2),
+                    value: totalAmount, // pass the total amount
                   },
                 },
               ],
