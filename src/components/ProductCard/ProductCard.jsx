@@ -1,8 +1,9 @@
+// displays product details and options to add/remove from cart
 import React from 'react'
 import PropTypes from 'prop-types'; 
 import './ProductCard.css';
 
-const ProductCard = ({ product, onAddToCart, onRemoveFromCart, quantity}) => {
+const ProductCard = ({ product, onAddToCart, onRemoveFromCart, quantity}) => { //destructure props
 
   return (
     <div className='product-card'>
